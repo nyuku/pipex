@@ -6,11 +6,11 @@
 /*   By: angnguye <angnguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 21:13:05 by angnguye          #+#    #+#             */
-/*   Updated: 2023/03/04 16:45:08 by angnguye         ###   ########.fr       */
+/*   Updated: 2023/05/06 15:39:43 by angnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "../../includes/ft_printf.h"
 
 static void	ft_write(unsigned long long decima, char type, char c)
 {

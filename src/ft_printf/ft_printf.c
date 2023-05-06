@@ -6,11 +6,11 @@
 /*   By: angnguye <angnguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:14:16 by angnguye          #+#    #+#             */
-/*   Updated: 2023/05/04 18:30:08 by angnguye         ###   ########.fr       */
+/*   Updated: 2023/05/06 15:39:16 by angnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "../../includes/ft_printf.h"
 
 int	ft_printf(const char *input, ...)
 
