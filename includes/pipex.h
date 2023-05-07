@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include "ft_printf.h"
+# include "libft.h"
 
 # define ERROR_FD_IN "Error to open the first file"
 # define ERROR_FD_OUT "Error to open the second file"
