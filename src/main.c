@@ -6,66 +6,28 @@
 /*   By: angnguye <angnguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:08:52 by angnguye          #+#    #+#             */
-/*   Updated: 2023/05/06 20:21:49 by angnguye         ###   ########.fr       */
+/*   Updated: 2023/05/12 01:50:43 by angnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-int	get_path(char **str, t_pipex *pipex)
+void child_one(char * command,t_pipex *pipex)
 {
-	int	i;
-
-	i = 0;
-	char *path = "PATH=";
-
-	while (strncmp(*str, path, 5) != 0)
+	char *cmd; // a free car va stocker une pointeur sur str qui est malloc
+	char *cmd_naked;
+	cmd_naked = ft_split(command, ' ');
+	cmd = get_command(command);
+	if (!cmd)//secu
 	{
-		str++;
-		i++;
+		free tout;
+		ft_printf("command not found\n");
+		exit(127);//uel autre code
 	}
-	pipex->path_str = str[i];
-	return (0);
-}
-
-int	print_message(char *str)
-{
-	ft_printf(str);
-	return (0);
-}
-
-int error_fd(int fd, int stdin_out)
-{
-	if (fd < 0)
-	{
-		if (stdin_out == 0)
-			ft_printf(ERROR_FD_IN);
-		if (stdin_out == 1)
-			ft_print_unsigned(ERROR_FD_OUT);
-		if (stdin_out == 2)
-			ft_print_unsigned(ERROR_FD_PIPE);
-
-	}
-	else
-		return(0);
-}
-
-void pregnancy(t_pipex *pipex)
-{
-	pipex->pid.child_1 = fork();
-	if (pipex->pid.child_1 == 0)
-		lance le process
-	if (pipex->pid.child_2 == 0)
-		lance le 2eme process 
-	else
-		ft_printf("error fork\n");
-
-
-}
-
-char **get_command(t_pipex *pipex)
-{
-
+	execve(cmd, cmd_naked, envp);
+	free(cmd_naked);
+	free(cmd);
+	exit(1);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -85,14 +47,13 @@ int	main(int argc, char **argv, char **envp)
 		error_fd(pipex.fd_out, 1);
 		error_fd(pipe(pipe_fd), 2);
 		get_path(*envp, &pipex);
-		pipex.path_cmd = ft_split(pipex.path_str, ':');
-		choper les commandes?
-		pregnancy(&pipex);
+		pipex.path_variables = ft_split(pipex.path_str, ':');//!malloc
+		if(!pipex.path_variables)
+			free_tableau_split(-1);
+		pregnancy(&pipex, argv[2],argv[3]);
 		waipid(pipex.pid.child_1, NULL, 0);
 		waipid(pipex.pid.child_2, NULL, 0);
-		free les tuyau? et les tableaux
-
+		free_alles(&pipex);
 	}
-
 	return (0);
 }
