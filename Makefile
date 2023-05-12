@@ -6,7 +6,7 @@
 #    By: angnguye <angnguye@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 13:11:40 by angnguye          #+#    #+#              #
-#    Updated: 2023/05/11 19:23:38 by angnguye         ###   ########.fr        #
+#    Updated: 2023/05/13 00:22:56 by angnguye         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,13 +37,14 @@ SRC				=
 					./src/get_command.c
 				 
 LIB				= ./includes/pipex.h
+				
 
 # ---------------- Objets -----------
 OBJS			= ${SRC:.c=.o}
 
 # --------------- Regles --------------------
 
-all:			start_msg ${NAME}	
+all:			${NAME}	
 
 ${NAME}:		${OBJS}
 				@${CC} ${CFLAGS} -o ${NAME} ${OBJS}

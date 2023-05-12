@@ -6,7 +6,7 @@
 /*   By: angnguye <angnguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:48:07 by angnguye          #+#    #+#             */
-/*   Updated: 2023/05/12 01:50:39 by angnguye         ###   ########.fr       */
+/*   Updated: 2023/05/12 02:10:17 by angnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_pipex
 	int		fd_in;
 	int		fd_out;
 	int		**fd_pipe;
+	char	**pipe_fd;
 	char	*path_str;
 	char	**path_variables;
 	char	*cmd;
