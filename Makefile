@@ -6,7 +6,7 @@
 #    By: angnguye <angnguye@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 13:11:40 by angnguye          #+#    #+#              #
-#    Updated: 2023/05/13 00:22:56 by angnguye         ###   ########.fr        #
+#    Updated: 2023/05/13 00:55:01 by angnguye         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,13 +28,13 @@ ENDCOLOR		=		\033[0m
 CFLAGS			= -Wall -Wextra -Werror -g  -w #-fsanitize=address
 
 # ---------------- Sources -----------
-SRC				=	
+SRC				=	./src/main.c \
 					./src/ft_printf/ft_printf.c \
 					./src/ft_printf/s_c_p_d_i.c \
 				 	./src/ft_printf/u_x_X.c \
-					./src/main.c \
 					./src/pipex_utils.c \
-					./src/get_command.c
+					./src/get_command.c \
+					./src/pipex_utils_bis.c 
 				 
 LIB				= ./includes/pipex.h
 				

@@ -1,16 +1,70 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   pipex_utils_bis.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: angnguye <angnguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/02 23:46:49 by angnguye          #+#    #+#             */
-/*   Updated: 2022/12/07 21:41:08 by angnguye         ###   ########.fr       */
+/*   Created: 2023/05/13 00:48:57 by angnguye          #+#    #+#             */
+/*   Updated: 2023/05/13 00:50:45 by angnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/pipex.h"
+void	*ft_calloc(size_t count, size_t size)
+{
+	char	*ptr;
+
+	ptr = 0;
+	ptr = (char *)(malloc(size * count));
+	if (!ptr)
+		return (0);
+	ft_memset(ptr, 0, size * count);
+	return (ptr);
+}
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < n)
+	{
+		if ((s1[i] && s2[i]) && (s1[i] == s2[i]))
+			i++;
+		else
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	}
+	return (0);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*ptr;
+	char	*str1;
+	char	*str2;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	str1 = (char *)s1;
+	str2 = (char *)s2;
+	if (str1 == 0 || str2 == 0)
+		return (NULL);
+	ptr = malloc (sizeof(char) *(ft_strlen(str1) + ft_strlen(str2)+1));
+	if (!ptr)
+		return (0);
+	while (str1[i])
+	{
+		ptr[i] = str1[i];
+		i++;
+	}
+	while (str2[j])
+		ptr[i++] = str2[j++];
+	ptr[i] = '\0';
+	return (ptr);
+}
 
 static int	count_word(char const *s, char c)
 {

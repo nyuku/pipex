@@ -6,7 +6,7 @@
 /*   By: angnguye <angnguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:48:07 by angnguye          #+#    #+#             */
-/*   Updated: 2023/05/12 02:10:17 by angnguye         ###   ########.fr       */
+/*   Updated: 2023/05/13 00:56:24 by angnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include "ft_printf.h"
-# include "libft.h"
+# include <stdlib.h>
+# include <stddef.h>
 
 # define ERROR_FD_IN "\nError to open the first file\n"
 # define ERROR_FD_OUT "\nError to open the second file\n"
@@ -35,9 +36,15 @@ void free_alles(t_pipex *pipex);
 //--------get_command.c------//
 int	get_path(char **str, t_pipex *pipex);
 
+//--------pipex_utils_bis.c------//
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	**ft_split(char const *s, char c);
+void	*ft_calloc(size_t count, size_t size);
 /*◇───────────────────────────────────────────────────────────────◇*\
 * 	Structures
 \*◇───────────────────────────────────────────────────────────────◇*/
+
 typedef struct	s_pid
 {
 	unsigned int child_1;
