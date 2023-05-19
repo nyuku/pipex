@@ -40,14 +40,14 @@ int error_fd(int fd, int stdin_out)
 		return(0);
 }
 
-void pregnancy(t_pipex *pipex, char *command1, char *command2)
+void pregnancy(t_pipex *pipex, char **argv)
 {
 	pipex->pid.child_1 = fork();
 	if (error_fd(pipex->pid.child_1, 3) == 0)
-		child_one(command1,pipex);
+		child_one(av,pipex);
 	pipex->pid.child_2 = fork();
 	if (error_fd(pipex->pid.child_2, 3) == 0)
-		child_one(command2,pipex);
+		child_one(av,pipex);
 	if(pipex->pid.child_1 < 0 || pipex->pid.child_2 < 0)
 		exit(0);
 		// free le tout();

@@ -45,6 +45,9 @@ typedef struct s_pipex
 	char	**cmd;
 	char	*cmd_path_absolut;
 	char	**envp;
+	char	**cmd_args;
+	char 	*cmmmmmd;
+
 }				t_pipex;
 
 /*◇───────────────────────────────────────────────────────────────◇*\
@@ -54,7 +57,7 @@ typedef struct s_pipex
 
 int	print_message(char *str);
 int error_fd(int fd, int stdin_out);
-void pregnancy(t_pipex *pipex, char *command1, char *command2);
+void pregnancy(t_pipex *pipex, char **av);
 void free_alles(t_pipex *pipex);
 
 //--------get_command.c------//

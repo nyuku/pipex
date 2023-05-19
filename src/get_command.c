@@ -32,7 +32,7 @@ int	get_path(char **envp, t_pipex *pipex)
 	return(0);
 }
 
-char *get_command(t_pipex *pipex, char *command)//!! a free dans la fonction receptacle
+char *get_command(char **path_variables, char *naked_cmd)//!! a free dans la fonction receptacle
 {
 	//pipex->path_variables contient 7 variables qu'on doit vérifier
 	char *temp;

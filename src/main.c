@@ -12,7 +12,7 @@
 
 #include "../includes/pipex.h"
 
-void child_one(char * command,t_pipex *pipex)
+void child_one(char **av,t_pipex *pipex)
 {
 	close(pipex->pipe_fd[0]);//on ferme autre rentrée d'info inutile
 	//entré
@@ -22,11 +22,12 @@ void child_one(char * command,t_pipex *pipex)
 	dup2(pipex->fd_in, 0);// on liu dit ou pomper l'imfo
 	close(pipex->fd_in); //on ferme l'original car plus besoin
 	
-	char *cmd; // a free car va stocker une pointeur sur str qui est malloc
+	char *cmd;
+	cmd = NULL;// a free car va stocker une pointeur sur str qui est malloc
 	char **cmd_naked;
 	cmd_naked = NULL;
-	cmd_naked = ft_split(command, ' ');
-	cmd = get_command(pipex, command);
+	pipex.cmd_args; = ft_split(av[2], ' ');
+	pipex.cmmmmmd = get_command(pipex.path_str,pipex.cmd_args );
 	if (!cmd) //secu
 	{
 		free_alles(pipex);
@@ -39,7 +40,7 @@ void child_one(char * command,t_pipex *pipex)
 	exit(1);
 }
 
-void child_two(char * command,t_pipex *pipex)
+void child_two(char **av,t_pipex *pipex)
 {
 	close(pipex->pipe_fd[1]); //fermer la source inutile selon la tache sinon imprime ailleurs
 
@@ -51,7 +52,7 @@ void child_two(char * command,t_pipex *pipex)
 	
 	char *cmd; // a free car va stocker une pointeur sur str qui est malloc
 	char *cmd_naked;
-	cmd_naked = ft_split(command, ' ');
+	cmd_naked = ft_split(av[3], ' ');
 	cmd = get_command(pipex, command);
 	if (!cmd)//secu
 	{
@@ -87,7 +88,7 @@ int	main(int argc, char **argv, char **envp)
 		pipex.path_variables = ft_split(pipex.path_str, ':');//!malloc
 		if(!pipex.path_variables)
 			free(pipex.path_variables);
-		pregnancy(&pipex, argv[2],argv[3]);
+		pregnancy(&pipex, argv);
 		waitpid(pipex.pid.child_1, NULL, 0);
 		waitpid(pipex.pid.child_2, NULL, 0);
 		free_alles(&pipex);
