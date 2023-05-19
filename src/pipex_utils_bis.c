@@ -6,11 +6,38 @@
 /*   By: angnguye <angnguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 00:48:57 by angnguye          #+#    #+#             */
-/*   Updated: 2023/05/13 00:50:45 by angnguye         ###   ########.fr       */
+/*   Updated: 2023/05/19 00:20:02 by angnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*str;
+	size_t	i;
+	size_t	slen;
+
+	i = 0;
+	slen = ft_strlen(s);
+	if (!s)
+		return (0);
+	if (len > slen)
+		len = slen;
+	str = malloc (sizeof(char) * (len + 1));
+	if (!str)
+		return (0);
+	while (i < len && start < slen)
+	{
+		str[i] = s[start];
+		i++;
+		start++;
+	}
+	str[i] = '\0';
+	return (str);
+}
+
+
 void	*ft_calloc(size_t count, size_t size)
 {
 	char	*ptr;
@@ -131,7 +158,7 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (0);
 	count_words = count_word(s, c);
-	ptr = ft_calloc((count_word(s, c) + 1), sizeof(char *));
+	ptr = ft_calloc((count_words + 1), sizeof(char *));
 	if (!ptr)
 		return (0);
 	i = 0;
@@ -148,4 +175,27 @@ char	**ft_split(char const *s, char c)
 		ptr[i] = 0;
 	}
 	return (ptr);
+}
+
+int ft_strlen(const char *str)
+{
+		int i = 0;
+    while(str[i] != '\0')
+        i++;
+    return (i);
+}
+
+void	*ft_memset(void *p, int c, size_t len)
+{
+	size_t			i;
+	unsigned char	*str;
+
+	str = (unsigned char *)p;
+	i = 0;
+	while (i < len)
+	{
+		str[i] = (unsigned char)c;
+		i++;
+	}
+	return (p);
 }

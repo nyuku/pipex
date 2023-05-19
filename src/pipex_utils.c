@@ -6,7 +6,7 @@
 /*   By: angnguye <angnguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 19:15:29 by angnguye          #+#    #+#             */
-/*   Updated: 2023/05/13 00:24:45 by angnguye         ###   ########.fr       */
+/*   Updated: 2023/05/19 00:23:22 by angnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,20 @@ void pregnancy(t_pipex *pipex, char *command1, char *command2)
 {
 	pipex->pid.child_1 = fork();
 	if (error_fd(pipex->pid.child_1, 3) == 0)
-		child_one(command1,t_pipex *pipex);
+		child_one(command1,pipex);
 	pipex->pid.child_2 = fork();
 	if (error_fd(pipex->pid.child_2, 3) == 0)
-		child_one(command2,t_pipex *pipex);
+		child_one(command2,pipex);
 	if(pipex->pid.child_1 < 0 || pipex->pid.child_2 < 0)
-		free le tout();
+		exit(0);
+		// free le tout();
+
 }
 
+void free_split(t_pipex *pipex)
+{
+
+}
 void free_alles(t_pipex *pipex)
 {
 	int	i;
@@ -60,7 +66,7 @@ void free_alles(t_pipex *pipex)
 	close (pipex->fd_in);
 	close (pipex->fd_out);
 	//free les lignes
-	while(path_variables[i] != NULL)//tant que c'est plein
-		free(path_variables[i++]);//a revoir l'ecriture
-	free(path_variables); // free le pointeur du tableau	
+	while(pipex->path_variables[i] != NULL)//tant que c'est plein
+		free(pipex->path_variables[i++]);//a revoir l'ecriture
+	free(pipex->path_variables); // free le pointeur du tableau	
 }
