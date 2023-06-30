@@ -6,92 +6,106 @@
 /*   By: angnguye <angnguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:08:52 by angnguye          #+#    #+#             */
-/*   Updated: 2023/05/19 00:37:26 by angnguye         ###   ########.fr       */
+/*   Updated: 2023/06/02 00:30:44 by angnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void child_one(char **av,t_pipex *pipex)
+void	open_files(char **argv, t_pipex *pipex)
 {
-	close(pipex->pipe_fd[0]);//on ferme autre rentrée d'info inutile
-	//entré
-	dup2(pipex->pipe_fd[1], 1);// on vise deja la sortie
-	close(pipex->pipe_fd[1]);//on a fait une copie, on peut fermer l'original
-	//
-	dup2(pipex->fd_in, 0);// on liu dit ou pomper l'imfo
-	close(pipex->fd_in); //on ferme l'original car plus besoin
-	
-	char *cmd;
-	cmd = NULL;// a free car va stocker une pointeur sur str qui est malloc
-	char **cmd_naked;
-	cmd_naked = NULL;
-	pipex.cmd_args; = ft_split(av[2], ' ');
-	pipex.cmmmmmd = get_command(pipex.path_str,pipex.cmd_args );
-	if (!cmd) //secu
+	pipex->fd_in = open(argv[1], O_RDONLY);
+	if (pipex->fd_in < 0)
 	{
-		free_alles(pipex);
-		ft_printf("command not found\n");
-		exit(127);//uel autre code
+		perror("Error\n The file1 can't be open\n");
+		exit (1);
 	}
-	execve(cmd, cmd_naked, pipex->envp);
-	free(cmd_naked);
-	free(cmd);
-	exit(1);
+	pipex->fd_out = open(argv[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
+	if (pipex->fd_out < 0)
+	{
+		perror("Error\n The file2 can't be use\n");
+		exit (1);
+	}
 }
 
-void child_two(char **av,t_pipex *pipex)
+void	check_pid_process( t_pipex pipex, int pid, int child, char **argv)
 {
-	close(pipex->pipe_fd[1]); //fermer la source inutile selon la tache sinon imprime ailleurs
-
-	dup2(pipex->pipe_fd[0], 0);//choper quelle entrée
-	close(pipex->pipe_fd[0]);
-
-	dup2(pipex->fd_out, 1);
-	close(pipex->fd_out);
-	
-	char *cmd; // a free car va stocker une pointeur sur str qui est malloc
-	char *cmd_naked;
-	cmd_naked = ft_split(av[3], ' ');
-	cmd = get_command(pipex, command);
-	if (!cmd)//secu
+	if (pid < 0)
 	{
-		free_alles(pipex);
-		ft_printf("command not found\n");
-		exit(127);//uel autre code
+		perror("Fork it! It doesn't work\n");
+		exit(1);
 	}
-	execve(cmd, cmd_naked, pipex->envp);
-	free(cmd_naked);
-	free(cmd);
-	exit(1);
+	else if (pid == 0 && child == 1)
+	{
+		child_one(argv[2], pipex);
+		exit(0);
+	}
+	else if (pid == 0 && child == 2)
+	{
+		child_two(argv[3], pipex);
+		exit(0);
+	}
+}
+
+void	get_path(t_pipex *pipex)
+{
+	int	i;
+
+	i = 0;
+	while (pipex->envp[i] != NULL)
+	{
+		if (ft_strncmp(pipex->envp[i], "PATH=", 5) == 0)
+		{
+			pipex->path_str = ft_substr(pipex->envp[i], \
+			5, ft_strlen(pipex->envp[i]) - 5);
+			break ;
+		}
+		i++;
+	}
+}
+
+char	*get_command(char *cmd, t_pipex pipex)
+{
+	char	*temp;
+
+	pipex.cheni.i = 0;
+	pipex.cheni.cmd_path_absolut = NULL;
+	get_path(&pipex);
+	pipex.path_slices = ft_split(pipex.path_str, ':');
+	if (!pipex.path_slices)
+		free(pipex.path_slices);
+	pipex.cheni.i = 0;
+	while (pipex.path_slices[pipex.cheni.i] != NULL)
+	{
+		temp = ft_strjoin(pipex.path_slices[pipex.cheni.i], "/");
+		pipex.cheni.cmd_path_absolut = ft_strjoin(temp, cmd);
+		free(temp);
+		if (access(pipex.cheni.cmd_path_absolut, X_OK) == 0)
+			return (pipex.cheni.cmd_path_absolut);
+		free(pipex.cheni.cmd_path_absolut);
+		pipex.cheni.i++;
+	}
+	return (NULL);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
-	pipex.envp = envp;
-	int pipe_fd[2];//on devrait stocker en structure
 
+	pipex.envp = envp;
 	if (argc != 5)
 	{
-		return (print_message("Not the right number of arguments"));
+		ft_putstr_fd("Not the right number of arguments\n", 2);
+		exit(1);
 	}
-	else
+	if (envp[0] == NULL)
+		return (0);
+	if (!argv[2] || !argv[3])
 	{
-		pipex.fd_in = open(argv[1], O_RDONLY);
-		pipex.fd_out = open(argv[4], O_WRONLY);
-		error_fd(pipex.fd_in, 0);
-		error_fd(pipex.fd_out, 1);
-		error_fd(pipe(pipe_fd), 2);
-		pipex.pipe_fd = pipe_fd;//on stock en static
-		get_path(envp, &pipex);
-		pipex.path_variables = ft_split(pipex.path_str, ':');//!malloc
-		if(!pipex.path_variables)
-			free(pipex.path_variables);
-		pregnancy(&pipex, argv);
-		waitpid(pipex.pid.child_1, NULL, 0);
-		waitpid(pipex.pid.child_2, NULL, 0);
-		free_alles(&pipex);
+		ft_putstr_fd("Problem with the commands\n", 2);
+		exit(1);
 	}
+	open_files(argv, &pipex);
+	process_child(argv, pipex);
 	return (0);
 }

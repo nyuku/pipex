@@ -6,7 +6,7 @@
 #    By: angnguye <angnguye@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 13:11:40 by angnguye          #+#    #+#              #
-#    Updated: 2023/05/13 00:55:01 by angnguye         ###   ########.fr        #
+#    Updated: 2023/06/02 00:15:19 by angnguye         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,9 @@ SRC				=	./src/main.c \
 					./src/ft_printf/s_c_p_d_i.c \
 				 	./src/ft_printf/u_x_X.c \
 					./src/pipex_utils.c \
-					./src/get_command.c \
-					./src/pipex_utils_bis.c 
+					./src/pipex_utils_bis.c \
+					./src/malloc.c \
+					./src/child.c
 				 
 LIB				= ./includes/pipex.h
 				

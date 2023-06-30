@@ -6,67 +6,104 @@
 /*   By: angnguye <angnguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 19:15:29 by angnguye          #+#    #+#             */
-/*   Updated: 2023/05/19 00:23:22 by angnguye         ###   ########.fr       */
+/*   Updated: 2023/06/01 21:41:02 by angnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-
-int	print_message(char *str)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	ft_printf(str);
+	size_t	i;
+
+	i = 0;
+	while (i < n)
+	{
+		if ((s1[i] && s2[i]) && (s1[i] == s2[i]))
+			i++;
+		else
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	}
 	return (0);
 }
 
-int error_fd(int fd, int stdin_out)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*str;
+	size_t	i;
+	size_t	slen;
+
+	i = 0;
+	slen = ft_strlen(s);
+	if (!s)
+		return (0);
+	if (len > slen)
+		len = slen;
+	str = malloc (sizeof(char) * (len + 1));
+	if (!str)
+		return (0);
+	while (i < len && start < slen)
+	{
+		str[i] = s[start];
+		i++;
+		start++;
+	}
+	str[i] = '\0';
+	return (str);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != 0)
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
+}
+
+int	error_fd(int fd, int stdin_out)
 {
 	if (fd < 0)
 	{
 		if (stdin_out == 0)
 			ft_printf(ERROR_FD_IN);
-			//stop
 		if (stdin_out == 1)
 			ft_print_unsigned(ERROR_FD_OUT);
-			//stop
 		if (stdin_out == 2)
 			ft_print_unsigned(ERROR_FD_PIPE);
-			//fstop
 		if (stdin_out == 3)
 			ft_print_unsigned(ERROR_FORK);
-
 	}
-	else
-		return(0);
+	return (fd);
 }
 
-void pregnancy(t_pipex *pipex, char **argv)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	pipex->pid.child_1 = fork();
-	if (error_fd(pipex->pid.child_1, 3) == 0)
-		child_one(av,pipex);
-	pipex->pid.child_2 = fork();
-	if (error_fd(pipex->pid.child_2, 3) == 0)
-		child_one(av,pipex);
-	if(pipex->pid.child_1 < 0 || pipex->pid.child_2 < 0)
-		exit(0);
-		// free le tout();
-
-}
-
-void free_split(t_pipex *pipex)
-{
-
-}
-void free_alles(t_pipex *pipex)
-{
-	int	i;
+	char	*ptr;
+	char	*str1;
+	char	*str2;
+	int		i;
+	int		j;
 
 	i = 0;
-	close (pipex->fd_in);
-	close (pipex->fd_out);
-	//free les lignes
-	while(pipex->path_variables[i] != NULL)//tant que c'est plein
-		free(pipex->path_variables[i++]);//a revoir l'ecriture
-	free(pipex->path_variables); // free le pointeur du tableau	
+	j = 0;
+	str1 = (char *)s1;
+	str2 = (char *)s2;
+	if (str1 == 0 || str2 == 0)
+		return (NULL);
+	ptr = malloc (sizeof(char) *(ft_strlen(str1) + ft_strlen(str2)+1));
+	if (!ptr)
+		return (0);
+	while (str1[i])
+	{
+		ptr[i] = str1[i];
+		i++;
+	}
+	while (str2[j])
+		ptr[i++] = str2[j++];
+	ptr[i] = '\0';
+	return (ptr);
 }

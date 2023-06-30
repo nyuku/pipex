@@ -6,7 +6,7 @@
 /*   By: angnguye <angnguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:48:07 by angnguye          #+#    #+#             */
-/*   Updated: 2023/05/19 00:20:16 by angnguye         ###   ########.fr       */
+/*   Updated: 2023/06/02 00:31:16 by angnguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "ft_printf.h"
 # include <stdlib.h>
 # include <stddef.h>
+# include <stdio.h>
 
 # define ERROR_FD_IN "\nError to open the first file\n"
 # define ERROR_FD_OUT "\nError to open the second file\n"
@@ -27,52 +28,54 @@
 * 	Structures
 \*◇───────────────────────────────────────────────────────────────◇*/
 
-typedef struct	s_pid
+typedef struct s_cheni
 {
-	unsigned int child_1;
-	unsigned int child_2;
-}				t_pid;
+	int		i;
+	char	*cmd_path_absolut;
+}				t_cheni;
 
 typedef struct s_pipex
 {
-	struct s_pid 	pid;
+	t_cheni	cheni;
+	char	**envp;
 	int		fd_in;
 	int		fd_out;
-	int		**fd_pipe;
-	char	**pipe_fd;
+	int		pipe_fd[2];
 	char	*path_str;
-	char	**path_variables;
-	char	**cmd;
-	char	*cmd_path_absolut;
-	char	**envp;
-	char	**cmd_args;
-	char 	*cmmmmmd;
+	char	**path_slices;
 
 }				t_pipex;
 
 /*◇───────────────────────────────────────────────────────────────◇*\
 * 	Prototypes funtions
 \*◇───────────────────────────────────────────────────────────────◇*/
-//--------pipex_utils.c------//
+void	get_path(t_pipex *pipex);
+//--------new_utils.c------//
+void	ft_putstr_fd(char *s, int fd);
+void	open_files(char **argv, t_pipex *pipex);
+void	process_child(char **argv, t_pipex pipex);
+void	child_one(char *argv, t_pipex pipex);
+void	child_two(char *argv, t_pipex pipex);
+void	get_path(t_pipex *pipex);
+char	*get_command(char *cmd, t_pipex pipex);
 
-int	print_message(char *str);
-int error_fd(int fd, int stdin_out);
-void pregnancy(t_pipex *pipex, char **av);
-void free_alles(t_pipex *pipex);
+// void free_alles(t_pipex *pipex);
 
-//--------get_command.c------//
-int	get_path(char **str, t_pipex *pipex);
-char *get_command(t_pipex *pipex, char *command);
+// //--------get_command.c------//
+// int	get_path(char **envp, t_pipex *pipex);
+// char *get_command(t_pipex *pipex, char *arg);
 
 //--------pipex_utils_bis.c------//
+void	check_pid_process( t_pipex pipex, int pid, int child, char **argv);
+
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
 void	*ft_calloc(size_t count, size_t size);
-static int	count_word(char const *s, char c);
-static int	len_word(char const *s, char c, int i);
-static char	*malloc_word(char const *s, char c, int index);
-int ft_strlen(const char *str);
+int		count_word(char const *s, char c);
+int		len_word(char const *s, char c, int i);
+char	*malloc_word(char const *s, char c, int index);
+int		ft_strlen(const char *str);
 void	*ft_memset(void *p, int c, size_t len);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 
