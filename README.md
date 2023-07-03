@@ -1,5 +1,8 @@
-# pipex
+# Pipex
 
+<div align="center">
+  <img src="https://media3.giphy.com/media/ZXZuGnK2h8T8rca9XB/giphy.gif?cid=6c09b95234xeocjm1zmhoo71uqdxn1md6ut3crtnvdw9rog9&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=g" alt="GIF d'introduction"width="200px">
+</div>
 Le projet Pipex consiste à développer une application en ligne de commande qui permet d'émuler le fonctionnement d'un pipeline de commandes en utilisant les redirections de fichiers et les tubes (pipes) en C.
 ## Objectif
 
